@@ -5,7 +5,7 @@ services:
     container_name: backent-omilj
     build: ./backend
     env_file:
-      - ./backend/.env
+      - ./env/backend.env
     networks:
       - app_network
     volumes:
@@ -23,7 +23,7 @@ services:
     container_name: frontend-omilj
     build: ./frontend
     env_file:
-      - ./frontend/.env
+      - ./env/frontend.env
     networks:
       - app_network
     volumes:
@@ -31,11 +31,8 @@ services:
     ports:
       - "${PORT}:3000"
     restart: always
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+    depends_on:
+      - backend
 
 
 networks:
